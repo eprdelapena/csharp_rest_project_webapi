@@ -34,4 +34,8 @@ touch Controllers/ProductsController.cs
 
 Step 6 Test if its running on postman
 
+dotnet run
+
 http://localhost:5000/weatherforecast GET
+
+Dont PUSH BIN AND OBJ it is only generated when compiling code
