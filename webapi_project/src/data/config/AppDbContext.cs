@@ -5,21 +5,58 @@ public class AppDbContext : DbContext
     public DbSet<CUser> User { get; set; } = null!;
     public DbSet<CUserSession> UserSession { get; set; } = null!;
 
+    //That method tells EF Core how to connect to your PostgreSQL database.
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        string DbConnectionUrl = Environment.GetEnvironmentVariable("DATABASE_URL") ?? "";
+        optionsBuilder.UseNpgsql(DbConnectionUrl);
+    }
 
     // this is where you define your db table constraints
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<CUser>().HasKey(item => item.id); //creates primary key on column id
-        modelBuilder.Entity<CUserSession>().HasKey(item => item.id); //creates primary key on column id
+        // // -----------------------------
+        // // Table names
+        // // -----------------------------
+        // modelBuilder.Entity<CUser>().ToTable("Users");
+        // modelBuilder.Entity<CUserSession>().ToTable("UserSessions");
 
-        // in the type CUserSession you must put this public CUser? User { get; set; } for navigational purposes 
-        // in order for EF Core to detect CUser Properties
-        // EF Core automatically uses the primary key of CUser, which is CUser.Id, as the referenced column.
+        // // -----------------------------
+        // // Primary Keys
+        // // -----------------------------
+        // modelBuilder.Entity<CUser>().HasKey(u => u.id);
+        // modelBuilder.Entity<CUserSession>().HasKey(s => s.id);
 
-        modelBuilder.Entity<CUserSession>()
-        .HasOne(item => item.User) // 1️⃣ Each CUserSession "has one" CUser associated with it
-        .WithMany()  // 2️⃣ A CUser can have many CUserSessions
-        .HasForeignKey(item => item.user_id)
-        .OnDelete(DeleteBehavior.Cascade);
+        // // -----------------------------
+        // // Column constraints
+        // // -----------------------------
+        // modelBuilder.Entity<CUser>().Property(u => u.Username).HasMaxLength(100).IsRequired();
+        // modelBuilder.Entity<CUser>().Property(u => u.Email).HasMaxLength(150).IsRequired();
+        // modelBuilder.Entity<CUserSession>().Property(s => s.Token).HasMaxLength(512).IsRequired();
+
+        // // -----------------------------
+        // // Unique indexes
+        // // -----------------------------
+        // modelBuilder.Entity<CUser>().HasIndex(u => u.Username).IsUnique();
+        // modelBuilder.Entity<CUser>().HasIndex(u => u.Email).IsUnique();
+
+        // // -----------------------------
+        // // Foreign key relationship
+        // // -----------------------------
+        // modelBuilder.Entity<CUserSession>()
+        //     .HasOne(s => s.User)           // navigation property
+        //     .WithMany()                    // no collection in CUser, optional: use .WithMany(u => u.Sessions)
+        //     .HasForeignKey(s => s.UserId)  // FK column in UserSessions table
+        //     .OnDelete(DeleteBehavior.Cascade);
+
+        // // -----------------------------
+        // // Default timestamps at DB level (optional)
+        // // -----------------------------
+        // modelBuilder.Entity<CUser>().Property(u => u.CreatedAt)
+        //     .HasDefaultValueSql("NOW() AT TIME ZONE 'UTC'");
+        // modelBuilder.Entity<CUserSession>().Property(s => s.CreatedAt)
+        //     .HasDefaultValueSql("NOW() AT TIME ZONE 'UTC'");
+        // modelBuilder.Entity<CUserSession>().Property(s => s.ExpiresAt)
+        //     .HasDefaultValueSql("NOW() AT TIME ZONE 'UTC' + INTERVAL '7 DAYS'");
     }
 }
