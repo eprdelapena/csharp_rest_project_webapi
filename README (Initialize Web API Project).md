@@ -13,6 +13,12 @@ Step 3 Install Entity Framework CLI tool (one time) for database migrations
 
 dotnet tool install --global dotnet-ef
 export PATH="$PATH:/Users/os/.dotnet/tools"
+dotnet-ef --version
+
+Main DB Migrations Command
+
+dotnet ef migrations add Init
+dotnet ef database update
 
 Step 4 Create folders
 
