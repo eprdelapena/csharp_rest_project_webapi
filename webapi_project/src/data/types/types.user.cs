@@ -1,6 +1,6 @@
 using System.Runtime.Serialization;
 
-public class TUser
+public class CUser
 {
     public required int id { get; set; } //pk
 
@@ -8,7 +8,7 @@ public class TUser
 
     public required string password { get; set; } //hashed password
 
-    public required E_User_TUserType user_type { get; set; }
+    public required EUserType user_type { get; set; }
 
     public required string full_name { get; set; }
 
@@ -18,13 +18,13 @@ public class TUser
 
     public required string company { get; set; }
 
-    public DateTime lastLogin = DateTime.UtcNow;
+    public DateTime last_login = DateTime.UtcNow;
 
-    public DateTime createdAt = DateTime.UtcNow;
+    public DateTime created_at = DateTime.UtcNow;
 
 }
 
-public enum E_User_TUserType
+public enum EUserType
 {
     [EnumMember(Value = "buyer")]
     Buyer,
