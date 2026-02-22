@@ -39,3 +39,5 @@ dotnet run
 http://localhost:5000/weatherforecast GET
 
 Dont PUSH BIN AND OBJ it is only generated when compiling code
+
+The code dependencies similar to package.json are located at your project_name.csproj 
