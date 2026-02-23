@@ -1,0 +1,50 @@
+version: '3'
+services:
+  postgres:
+    image: postgres
+    container_name: csharp_backend_postgres_container
+    environment:
+      POSTGRES_USER: csharpbackend
+      POSTGRES_PASSWORD: 12345
+      POSTGRES_DB: dbcsharpbackend
+    ports:
+      - '5439:5432'
+    volumes:
+      - community_volume_csharpbackend:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: csharpbackend_pgadmin_container
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: 12345
+    ports:
+      - '5059:80'
+    depends_on:
+      - postgres
+
+  redis:
+    image: redis:6.0.7
+    container_name: csharpbackend_redis_container
+    restart: always
+    ports:
+      - "6380:6379"
+    volumes:
+      - redis_volume_data:/data
+
+  redis_insight:
+    image: redislabs/redisinsight:1.14.0
+    container_name: csharpbackend_redis_insight_container
+    restart: always
+    ports:
+      - "8002:8001"
+    volumes:
+      - redis_csharp_volume_data:/db
+    depends_on:
+      - redis
+
+volumes:
+  community_volume_csharpbackend:
+  redis_volume_data:
+  redis_csharp_volume_data:
+  # dynamodb_local_data:

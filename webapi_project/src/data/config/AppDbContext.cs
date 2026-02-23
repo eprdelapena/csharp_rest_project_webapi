@@ -2,24 +2,15 @@ using Microsoft.EntityFrameworkCore;
 
 public class AppDbContext : DbContext
 {
-    private static AppDbContext? _instance = null;
     private readonly string? _ConnectionString = null;
     public DbSet<CUser> User { get; set; } = null!;
     public DbSet<CUserSession> UserSession { get; set; } = null!;
 
-    private AppDbContext(string ConnectionString)
+    // entity framework must be public and not a static so EF Core can call it and dont pass parameter strings
+    public AppDbContext()
     {
+        string ConnectionString = "";
         this._ConnectionString = ConnectionString;
-    }
-
-    public static AppDbContext GetInstance(string ConnectionString)
-    {
-        if (AppDbContext._instance != null)
-        {
-            return AppDbContext._instance;
-        }
-        AppDbContext NewInstance = new AppDbContext(ConnectionString);
-        return NewInstance;
     }
 
     //That method tells EF Core how to connect to your PostgreSQL database.

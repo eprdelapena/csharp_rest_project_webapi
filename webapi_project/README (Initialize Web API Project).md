@@ -41,3 +41,9 @@ http://localhost:5000/weatherforecast GET
 Dont PUSH BIN AND OBJ it is only generated when compiling code
 
 The code dependencies similar to package.json are located at your project_name.csproj 
+
+CREATE DATABASE SCHEMA
+
+Step 1. Create Database Classes for EF Core must be classes not Record or anything /src/data/types
+Step 2. Specify EF Core configurations main entry point for data migrations /src/data/config
+
