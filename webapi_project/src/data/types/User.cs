@@ -1,5 +1,6 @@
 using System.Runtime.Serialization;
 
+namespace Schema.DbTable;
 public class CUser
 {
     public required int id { get; set; } //pk
@@ -18,12 +19,12 @@ public class CUser
 
     public required string company { get; set; }
 
-    public DateTime last_login = DateTime.UtcNow;
+    public DateTime last_login { get; set; } = DateTime.UtcNow;
 
-    public DateTime created_at = DateTime.UtcNow;
+    public DateTime created_at { get; set; } = DateTime.UtcNow;
 
     //for with many relationships must be I Collection
-    public ICollection<CUserSession> UserSessions {get; set;}= new List<CUserSession>();
+    public ICollection<CUserSession> UserSessions { get; set; } = new List<CUserSession>();
 
 }
 
@@ -32,6 +33,6 @@ public enum EUserType
     [EnumMember(Value = "buyer")]
     Buyer,
 
-    [EnumMember(Value = "Seller")]
+    [EnumMember(Value = "seller")]
     Seller,
 }

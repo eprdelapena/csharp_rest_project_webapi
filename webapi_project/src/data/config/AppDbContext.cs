@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Schema.DbTable;
 
 public class AppDbContext : DbContext
 {
