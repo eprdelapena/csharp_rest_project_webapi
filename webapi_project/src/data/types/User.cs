@@ -22,6 +22,9 @@ public class CUser
 
     public DateTime created_at = DateTime.UtcNow;
 
+    //for with many relationships must be I Collection
+    public ICollection<CUserSession> UserSessions {get; set;}= new List<CUserSession>();
+
 }
 
 public enum EUserType
