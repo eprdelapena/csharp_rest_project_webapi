@@ -30,7 +30,7 @@ services:
     ports:
       - "6380:6379"
     volumes:
-      - redis_volume_data:/data
+      - redis_csharp_volume_data:/data
 
   redis_insight:
     image: redislabs/redisinsight:1.14.0
@@ -39,12 +39,11 @@ services:
     ports:
       - "8002:8001"
     volumes:
-      - redis_csharp_volume_data:/db
+        - redis_csharp_volume_data:/db
     depends_on:
       - redis
 
 volumes:
   community_volume_csharpbackend:
-  redis_volume_data:
   redis_csharp_volume_data:
   # dynamodb_local_data:
